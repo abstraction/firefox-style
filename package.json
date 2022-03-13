@@ -1,0 +1,15 @@
+{
+  "name": "firefox-css",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "sass --no-source-map -w  src/sideberry/sideberry.scss:dist/sideberry.css src/firefox/userChrome.scss:dist/userChrome.css src/firefox/userContent.scss:dist/userChrome.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.49.9"
+  }
+}

@@ -1,0 +1,195 @@
+// TODO explain stuff
+// Going with double quotes because I see it more in the wild + mdn uses double quotes
+
+$color-bg: #1e2021;
+$secondary-colour: #191b1c;
+$font-primary: "Iosevka Aile";
+
+#root {
+    --tabs-height: 36px;
+    --tabs-title-padding: 10px;
+    --tabs-font-size: 12px;
+    --tabs-title-lines: 2;
+    --tabs-font: "#{$font-primary}";
+    --nav-btn-width: 20px;
+    --name-font-size: 12px;
+    --count-font-size: 10px;
+    --tabs-indent: 20px;
+    --indent-border-color: 170, 170, 170;
+    --unread-tab-color: 232, 136, 115;
+    --bookmarks-bookmark-font: "#{$font-primary}";
+    --bookmarks-folder-font: "#{$font-primary}";
+    // --tabs-bg-hover: #{$secondary-colour};
+    // --tabs-bg-active: #{$secondary-colour};
+    // --bg-fg: #1e2021;
+
+    // Apparently Sideberry has auto switch color scheme so this is seperated
+    &[data-style="auto"] {
+        --bg: #{$color-bg};
+        // --title-fg: #fff;
+        // --sub-title-fg: #fff;
+        // --label-fg: #fff;
+        // --label-fg-hover: #fff;
+        // --label-fg-active: #aaa;
+        // --info-fg: #898989;
+        // --true-fg: #64df64;
+        // --false-fg: #df6464;
+        // --false-bg: #b93527;
+        // --active-fg: #4993e6;
+        // --inactive-fg: #5c5c5c;
+        // --notice-fg: #00e9fb;
+        // --favicons-placeholder-bg: rgba(255,255,255,0.141);
+        // --border-fg: #282828;
+        // --border-active-fg: rgba(0,0,0,0.196);
+        // --border-flare-fg: rgba(255,255,255,0.031);
+        // --progress-fg: #00e9fb;
+        // --progress-bg: #595959;
+        --tabs-activated-bg: #{$secondary-colour};
+    }
+}
+
+// Multiline tab
+
+.Tab {
+    font-family: var(--tabs-font);
+
+    .t-box {
+        align-items: center;
+        max-height: calc(var(--tabs-height) - var(--tabs-title-padding));
+        overflow: hidden;
+    }
+
+    .title {
+        font-size: var(--tabs-font-size);
+        white-space: pre-wrap;
+        line-height: calc(
+            (var(--tabs-height) - var(--tabs-title-padding)) /
+                var(--tabs-title-lines)
+        );
+    }
+
+    .fav {
+        order: 1;
+    }
+
+    .audio {
+        left: 0;
+    }
+
+    .title {
+        padding-left: 8px;
+    }
+
+    &:hover .close {
+        opacity: 1;
+        z-index: 21;
+        background: var(--bg);
+    }
+
+    &[data-unread] .title {
+        font-style: oblique;
+        color: rgb(var(--unread-tab-color));
+    }
+    &[data-lvl] .lvl-wrapper {
+        border-left: 1px solid rgba(var(--indent-border-color), 0.3);
+    }
+
+    &[data-lvl][data-unread] .lvl-wrapper {
+        border-left: 1px solid rgba(var(--unread-tab-color), 0.3);
+    }
+
+    &[data-lvl] {
+        border-left: 1px solid rgba(var(--indent-border-color), 0.3);
+    }
+
+    &[data-lvl][data-unread] {
+        border-left: 1px solid rgba(var(--unread-tab-color), 0.3);
+    }
+
+    // /* tab border */
+
+    &[data-lvl="0"] .lvl-wrapper {
+        border-left: none;
+    }
+
+    &[data-lvl="0"][data-unread] .lvl-wrapper {
+        border-left: none;
+    }
+
+    & > .lvl-wrapper {
+        border: 1px solid rgba(var(--indent-border-color), 0.1);
+        border-width: 1px 0px 0 0px;
+    }
+
+    &:first-child > .lvl-wrapper {
+        border: none;
+    }
+
+    &[data-unread] > .lvl-wrapper {
+        border: 1px solid rgba(var(--unread-tab-color), 0.1);
+    }
+}
+
+// /**********************/
+// /* Vertical line tab */
+// /********************/
+
+.NavigationBar {
+    font-family: var(--tabs-font);
+
+    .panel-btn {
+        display: flex;
+        flex-direction: column-reverse;
+        padding: 6px 0;
+        height: auto;
+    }
+
+    .panels-box {
+        .panel-btn[data-type="add"] {
+            height: var(--nav-btn-width);
+        }
+        .panel-btn:not([data-type="add"]) > svg,
+        .panel-btn > img {
+            display: none;
+        }
+    }
+
+    .panel-btn {
+        .update-badge {
+            top: 1px;
+            left: 1px;
+        }
+        .ok-badge,
+        .err-badge,
+        .progress-spinner {
+            display: none;
+        }
+        .len {
+            position: relative;
+            font-size: var(--count-font-size);
+            writing-mode: sideways-lr;
+            text-orientation: mixed;
+            background-color: transparent;
+            padding: 0;
+            margin: 0 2px 0 0;
+            top: 0;
+            right: 0;
+            color: var(--container-fg, var(--nav-btn-fg));
+        }
+        .len:before {
+            content: ": ";
+            font-size: var(--name-font-size);
+        }
+
+        .name {
+            position: relative;
+            display: block;
+            padding: 0;
+            margin: 0 2px 0 0;
+            font-size: var(--name-font-size);
+            color: var(--container-fg, var(--nav-btn-fg));
+            writing-mode: sideways-lr;
+            text-orientation: mixed;
+        }
+    }
+}
